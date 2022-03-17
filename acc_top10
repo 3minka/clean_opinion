@@ -20,10 +20,10 @@ def acc_top10(y_true, y_pred):
     y_true = y_true.astype(np.int64)
     assert y_pred.size == y_true.size
     D = max(y_pred.max(), y_true.max()) + 1
-    w = np.zeros((D, D), dtype=np.int64)  # D  = label 갯수 (0~50)
+    w = np.zeros((D, D), dtype=np.int64)  # D  = (number of label or class)
     
     for i in range(len(y)):
-        w[y_pred[i], y_true[i]] += 1   # shape == (y_pred.size, 1)  # (y_pred.size == 문서갯수)
+        w[y_pred[i], y_true[i]] += 1   # shape == (y_pred.size, 1)  # (y_pred.size == shape(a,b) == number of a*b)
     from sklearn.utils.linear_assignment_ import linear_assignment
     ind = linear_assignment(w.max() - w)   # w.max() - w == (D, D) // ind == (D, 2) shape
     return sum([w[i, j] for i, j in ind]) * 1.0 / len(y)
