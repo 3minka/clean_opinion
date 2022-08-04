@@ -1,0 +1,37 @@
+# th 가변으로 짠 거 
+
+first_dist = 0
+th = 0.9
+
+total_edge_index = []
+edge_ind_20 = []
+mc = 20
+
+for i in range(len(dist[0])):
+    p = dist[i].argsort()[-mc:][::-1]
+    edge_ind_20.append(p)
+
+
+for doc1 in range(len(dist[0])):
+    first_index = edge_ind_20[doc1][0]  ## 11616
+    
+    first_dist = dist[doc1][first_index]
+    th_first = th*first_dist
+    
+    
+    edge_doc1_candidate = [] # 후보자들 들어간 리스트
+    
+    
+    # second_index
+    second_index_list = []
+    
+    for num, second_index in enumerate(edge_ind_20[doc1]): 
+        second_index_list.append(second_index)
+        for index in second_index_list:
+            if dist[second_index][index] > dist[doc1][second_index]*th: #dist[doc1][second_index]*th  #th_first
+                edge_doc1_candidate.append(index)
+            else:
+                pass
+    
+    edge_doc1_candidate = list(set(edge_doc1_candidate))
+    total_edge_index.append(edge_doc1_candidate)
